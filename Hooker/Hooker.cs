@@ -35,7 +35,7 @@ namespace Hooker
 
 			scriptAssembly.Write("Assembly-CSharp.out.dll");
 
-			foreach (var assemblyName in new []{"Assembly-CSharp", "HookRegistry", "Newtonsoft.Json"})
+			foreach (var assemblyName in new []{"Assembly-CSharp", "HookRegistry"})
 			{
 				var srcName = assemblyName + ".dll";
 				if (File.Exists(assemblyName + ".out.dll"))
@@ -68,11 +68,7 @@ namespace Hooker
 
 		public void AddHookBySuffix(string typeName, string methodName)
 		{
-			var matchingTypes = Module.Types.Where(t =>
-			{
-				var idx = t.Name.IndexOf(typeName);
-				return idx < 0 ? false : idx == 0 || t.Name[idx - 1] == '.';
-			});
+			var matchingTypes = Module.Types.Where(t => t.Name == typeName);
 			var found = false;
 			foreach (var type in matchingTypes)
 			{
